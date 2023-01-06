@@ -31,10 +31,23 @@ const ShoeCard = ({
       ? 'new-release'
       : 'default'
 
+  let FlagComponent;
+  let text;
+  if (variant === 'on-sale') {
+    FlagComponent = OnSaleFlag;
+    text = 'Sale';
+  } else if ( variant === 'new-release') {
+    FlagComponent = NewReleaseFlag;
+    text = 'Just Released!';
+  } else {
+    FlagComponent = Flag;
+  }
+
   return (
     <Link href={`/shoe/${slug}`}>
       <Wrapper>
         <ImageWrapper>
+          <FlagComponent>{text}</FlagComponent>
           <Image alt="" src={imageSrc} />
         </ImageWrapper>
         <Spacer size={12} />
@@ -61,7 +74,27 @@ const ImageWrapper = styled.div`
   position: relative;
 `;
 
-const Image = styled.img``;
+const Flag = styled.div`
+  color: ${COLORS.white};
+  font-weight: ${WEIGHTS.medium};
+  position: absolute;
+  right: -2px;
+  top: 12px;
+  padding: 4px 10px;
+  border-radius: 4px;
+`;
+
+const NewReleaseFlag = styled(Flag)`
+  background-color: ${COLORS.secondary};
+`;
+
+const OnSaleFlag = styled(Flag)`
+  background-color: ${COLORS.primary};
+`
+
+const Image = styled.img`
+  width: 100%;
+`;
 
 const Row = styled.div`
   font-size: 1rem;
